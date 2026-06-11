@@ -35,8 +35,8 @@
 };
 
 const AFFILIATE_LINK = "";
-const ADMIN_EMAIL = "admin@englishweb.local";
-const ADMIN_PASSWORD = "admin123";
+const ADMIN_EMAIL = "lethuhien211094@gmail.com";
+const ADMIN_PASSWORD = "123456";
 const GUEST_LIMIT = 1;
 const MEMBER_LIMIT = 8;
 const STORAGE_KEY = "englishWebState";
@@ -282,3 +282,4 @@ restartButton.addEventListener("click", () => renderQuiz(activeAge));
 
 renderQuiz(activeAge);
 updateAccountUI();
+

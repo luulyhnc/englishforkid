@@ -18,8 +18,8 @@ Mở file `index.html` bằng trình duyệt. Website chạy trực tiếp, khô
 ## Tài khoản admin demo
 
 ```txt
-Email: admin@englishweb.local
-Mật khẩu: admin123
+Email: lethuhien211094@gmail.com
+Mật khẩu: 123456
 ```
 
 Lưu ý: bản này chạy trên GitHub Pages nên đăng ký/đăng nhập chỉ lưu trên trình duyệt bằng `localStorage`. Nếu cần tài khoản thật dùng chung cho mọi người, cần thêm backend như Firebase, Supabase hoặc một server riêng.
@@ -56,3 +56,4 @@ Sau đó, mỗi lần bấm nút `Nộp bài`, website sẽ chấm điểm và m
 4. Chọn `Deploy from a branch`.
 5. Chọn branch `main` và folder `/root`, sau đó bấm `Save`.
 6. Chờ GitHub tạo link public dạng `https://ten-tai-khoan.github.io/english-web/`.
+
