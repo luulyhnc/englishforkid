@@ -1,0 +1,11 @@
+﻿English Web links
+
+GitHub repository:
+https://github.com/luulyhnc/englishforkid
+
+GitHub Pages website:
+https://luulyhnc.github.io/englishforkid/
+
+Note:
+If the website link does not open yet, enable GitHub Pages in GitHub:
+Settings > Pages > Deploy from a branch > main > /root > Save.
