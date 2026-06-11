@@ -179,6 +179,8 @@ h3 {
 .account-section,
 .test-shell { background: white; }
 
+.test-shell[hidden] { display: none; }
+
 .account-grid {
   display: grid;
   grid-template-columns: minmax(280px, 420px) minmax(280px, 1fr);
@@ -306,6 +308,68 @@ h3 {
 
 .user-row span { color: var(--muted); }
 
+
+.learning-section {
+  background: #ffffff;
+}
+
+.learning-section[hidden] {
+  display: none;
+}
+
+.learning-grid {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.learning-summary,
+.level-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.learning-summary {
+  padding: 22px;
+}
+
+.learning-summary p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.level-list {
+  display: grid;
+  gap: 12px;
+}
+
+.level-card {
+  display: grid;
+  gap: 8px;
+  min-height: 92px;
+  padding: 18px;
+  color: var(--ink);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.level-card strong {
+  font-size: 20px;
+}
+
+.level-card span {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.level-card.active {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(61, 127, 240, 0.14), var(--shadow);
+}
 .age-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -489,6 +553,7 @@ h3 {
   .topbar { align-items: flex-start; flex-direction: column; }
   .hero,
   .account-grid,
+  .learning-grid,
   .quiz-layout,
   .progress-band,
   .admin-panel { grid-template-columns: 1fr; }
@@ -505,3 +570,7 @@ h3 {
   .section { padding-left: 14px; padding-right: 14px; }
   .progress-band { margin-left: 14px; margin-right: 14px; }
 }
+
+
+
+

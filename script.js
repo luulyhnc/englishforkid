@@ -61,6 +61,7 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_
 const tabs = document.querySelectorAll(".age-tab");
 const formTabs = document.querySelectorAll(".form-tab");
 const form = document.querySelector("#quiz-form");
+const testsSection = document.querySelector("#tests");
 const authForm = document.querySelector("#auth-form");
 const questionsEl = document.querySelector("#questions");
 const titleEl = document.querySelector("#quiz-title");
@@ -78,11 +79,18 @@ const attemptsLeft = document.querySelector("#attempts-left");
 const logoutButton = document.querySelector("#logout");
 const adminPanel = document.querySelector("#admin-panel");
 const userList = document.querySelector("#user-list");
+const learningSection = document.querySelector("#learning");
+const learningWelcome = document.querySelector("#learning-welcome");
+const learningAccount = document.querySelector("#learning-account");
+const learningQuota = document.querySelector("#learning-quota");
+const learningStart = document.querySelector("#learning-start");
+const levelCards = document.querySelectorAll(".level-card");
 
 let activeAge = "5-7";
 let authMode = "login";
 let currentSession = null;
 let currentProfile = null;
+let selectedLearningAge = "5-7";
 
 function getGuestSubmissions() {
   return Number(localStorage.getItem(GUEST_STORAGE_KEY) || 0);
@@ -157,6 +165,27 @@ function updateAccountUI() {
   attemptsLeft.textContent = attemptInfo.left;
   adminPanel.hidden = !isAdminUser(user);
   renderUserList();
+  updateLearningUI();
+}
+
+function updateLearningUI() {
+  const user = getCurrentUser();
+  if (!learningSection) return;
+
+  learningSection.hidden = !user;
+  if (!user) return;
+
+  const attemptInfo = getAttemptInfo();
+  const accountType = isAdminUser(user) ? "Admin" : "Tài khoản học tập";
+  learningWelcome.textContent = "Chọn level Super Kids phù hợp rồi bấm vào làm bài.";
+  learningAccount.textContent = `${accountType}: ${user.email}`;
+  learningQuota.textContent = `Lượt nộp còn lại: ${attemptInfo.left}`;
+}
+
+function openLearningDashboard() {
+  updateLearningUI();
+  window.location.hash = "learning";
+  document.querySelector("#learning").scrollIntoView({ behavior: "smooth" });
 }
 
 function renderUserList() {
@@ -206,6 +235,7 @@ async function handleAuth(event) {
   } else {
     currentSession = data.session;
     authMessage.textContent = "Đã đăng nhập.";
+    setTimeout(openLearningDashboard, 100);
   }
 
   authForm.reset();
@@ -279,12 +309,26 @@ function scoreQuiz() {
   resultEl.textContent = `${message}: ${score}/${quiz.questions.length} câu đúng (${percent}%).`;
 }
 
+function selectQuizLevel(age) {
+  selectedLearningAge = age;
+  tabs.forEach((item) => item.classList.toggle("active", item.dataset.age === age));
+  levelCards.forEach((item) => item.classList.toggle("active", item.dataset.age === age));
+  renderQuiz(age);
+}
+
 tabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    tabs.forEach((item) => item.classList.remove("active"));
-    tab.classList.add("active");
-    renderQuiz(tab.dataset.age);
-  });
+  tab.addEventListener("click", () => selectQuizLevel(tab.dataset.age));
+});
+
+levelCards.forEach((card) => {
+  card.addEventListener("click", () => selectQuizLevel(card.dataset.age));
+});
+
+learningStart.addEventListener("click", () => {
+  selectQuizLevel(selectedLearningAge);
+  testsSection.hidden = false;
+  window.location.hash = "tests";
+  testsSection.scrollIntoView({ behavior: "smooth" });
 });
 
 formTabs.forEach((tab) => {
@@ -298,6 +342,8 @@ logoutButton.addEventListener("click", async () => {
   currentSession = null;
   currentProfile = null;
   authMessage.textContent = "Đã đăng xuất.";
+  window.location.hash = "account";
+  testsSection.hidden = true;
   updateAccountUI();
 });
 
@@ -325,3 +371,6 @@ supabaseClient.auth.onAuthStateChange(async (_event, session) => {
 
 renderQuiz(activeAge);
 refreshSession();
+
+
+

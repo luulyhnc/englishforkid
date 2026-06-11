@@ -13,7 +13,7 @@
       <span>English Web</span>
     </a>
     <nav class="nav" aria-label="Điều hướng chính">
-      <a href="#tests">Bài thi</a>
+      <a href="#learning">Trang học tập</a>
       <a href="#account">Tài khoản</a>
       <a href="#practice">Luyện tập</a>
       <a href="#progress">Tiến độ</a>
@@ -27,7 +27,7 @@
         <h1>English Web</h1>
         <p class="subtitle">Bé làm bài test theo chủ đề quen thuộc trong giáo trình Super Kids và nhận kết quả ngay sau khi nộp bài.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#tests">Bắt đầu làm bài</a>
+          <a class="button primary" href="#account">Đăng nhập để làm bài</a>
           <a class="button secondary" href="#account">Đăng ký miễn phí</a>
         </div>
       </div>
@@ -76,13 +76,45 @@
         <div>
           <p class="eyebrow">Admin</p>
           <h3>Quản lý tài khoản demo</h3>
-          <p>Danh sách này lưu trên trình duyệt hiện tại.</p>
+          <p>Tài khoản được lưu bằng Supabase Auth giống web Nhà trọ.</p>
         </div>
         <div id="user-list" class="user-list"></div>
       </div>
     </section>
 
-    <section id="tests" class="section test-shell">
+
+    <section id="learning" class="section learning-section" hidden>
+      <div class="section-heading wide">
+        <p class="eyebrow">Trang học tập</p>
+        <h2>Chọn bài trước khi làm test</h2>
+        <p id="learning-welcome">Chọn level phù hợp rồi bấm vào làm bài.</p>
+      </div>
+
+      <div class="learning-grid">
+        <article class="learning-summary">
+          <span class="card-icon">EW</span>
+          <h3 id="learning-account">Tài khoản học tập</h3>
+          <p id="learning-quota">Lượt nộp còn lại: 0</p>
+          <button id="learning-start" class="button primary full" type="button">Vào làm bài</button>
+        </article>
+
+        <div class="level-list" aria-label="Chọn level Super Kids">
+          <button class="level-card active" type="button" data-age="5-7">
+            <strong>Super Kids Starter</strong>
+            <span>Chào hỏi, màu sắc, số đếm, lớp học, gia đình.</span>
+          </button>
+          <button class="level-card" type="button" data-age="8-10">
+            <strong>Super Kids Junior</strong>
+            <span>Đồ chơi, hoạt động hằng ngày, câu hỏi ngắn.</span>
+          </button>
+          <button class="level-card" type="button" data-age="11-13">
+            <strong>Super Kids Challenge</strong>
+            <span>Ngữ pháp, miêu tả, khả năng và đọc hiểu ngắn.</span>
+          </button>
+        </div>
+      </div>
+    </section>
+    <section id="tests" class="section test-shell" hidden>
       <div class="section-heading">
         <p class="eyebrow">Chọn cấp độ</p>
         <h2>Bài test theo Super Kids</h2>
@@ -155,5 +187,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+
 
 
