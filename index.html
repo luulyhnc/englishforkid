@@ -13,10 +13,11 @@
       <span>English Web</span>
     </a>
     <nav class="nav" aria-label="Điều hướng chính">
+      <a href="#contests">Cuộc thi</a>
       <a href="#learning">Trang học tập</a>
+      <a href="#leaderboard">Bảng xếp hạng</a>
+      <a href="#guide">Hướng dẫn</a>
       <a href="#account">Tài khoản</a>
-      <a href="#practice">Luyện tập</a>
-      <a href="#progress">Tiến độ</a>
     </nav>
   </header>
 
@@ -25,9 +26,9 @@
       <div class="hero-copy">
         <p class="eyebrow">Thi thử tiếng Anh trắc nghiệm</p>
         <h1>English Web</h1>
-        <p class="subtitle">Bé làm bài test theo chủ đề quen thuộc trong giáo trình Super Kids và nhận kết quả ngay sau khi nộp bài.</p>
+        <p class="subtitle">Nền tảng thi thử tiếng Anh trực tuyến cho bé theo lộ trình Super Kids, có vòng tự luyện, bài kiểm tra, xếp hạng và báo cáo kết quả.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#account">Đăng nhập để làm bài</a>
+          <a class="button primary" href="#contests">Xem cuộc thi</a>
           <a class="button secondary" href="#account">Đăng ký miễn phí</a>
         </div>
       </div>
@@ -36,6 +37,67 @@
       </div>
     </section>
 
+
+    <section id="contests" class="section contest-section">
+      <div class="section-heading wide">
+        <p class="eyebrow">Cuộc thi</p>
+        <h2>English Web Super Kids Arena</h2>
+        <p>Chọn cuộc thi theo cấp độ, luyện thử nhiều vòng rồi vào bài kiểm tra chính thức khi đã sẵn sàng.</p>
+      </div>
+
+      <div class="contest-stats" aria-label="Thống kê nền tảng">
+        <div><strong>3</strong><span>Level Super Kids</span></div>
+        <div><strong>30</strong><span>Câu hỏi mẫu</span></div>
+        <div><strong>8</strong><span>Lượt nộp cho tài khoản</span></div>
+        <div><strong>1</strong><span>Lượt thử cho khách</span></div>
+      </div>
+
+      <div class="contest-board">
+        <article class="contest-card blue">
+          <div class="contest-title">TERM PRACTICE TEST - SUPER KIDS STARTER</div>
+          <div class="contest-body">
+            <p><strong>Số vòng thi:</strong> 1</p>
+            <p><strong>Số vòng thi tự luyện:</strong> 5</p>
+            <p><strong>Thời gian:</strong> 01/06/2026 08:00 -> 31/08/2026 22:00</p>
+            <p><strong>Khối lớp tham gia:</strong> Starter / Lớp 1</p>
+            <a class="button primary" href="#account">Đăng nhập tham gia</a>
+          </div>
+        </article>
+
+        <article class="contest-card warm">
+          <div class="contest-title">FUN CHALLENGE - SUPER KIDS JUNIOR</div>
+          <div class="contest-body">
+            <p><strong>Số vòng thi:</strong> 1</p>
+            <p><strong>Số vòng thi tự luyện:</strong> 8</p>
+            <p><strong>Thời gian:</strong> 01/06/2026 08:00 -> 31/08/2026 22:00</p>
+            <p><strong>Khối lớp tham gia:</strong> Junior / Lớp 2-3</p>
+            <a class="button primary" href="#account">Đăng nhập tham gia</a>
+          </div>
+        </article>
+
+        <article class="contest-card blue">
+          <div class="contest-title">FINAL TEST - SUPER KIDS CHALLENGE</div>
+          <div class="contest-body">
+            <p><strong>Số vòng thi:</strong> 1</p>
+            <p><strong>Số vòng thi tự luyện:</strong> 10</p>
+            <p><strong>Thời gian:</strong> 01/06/2026 08:00 -> 31/08/2026 22:00</p>
+            <p><strong>Khối lớp tham gia:</strong> Challenge / Lớp 4-5</p>
+            <a class="button primary" href="#account">Đăng nhập tham gia</a>
+          </div>
+        </article>
+
+        <article class="contest-card warm">
+          <div class="contest-title">WEEKLY REVIEW - VOCABULARY & SPEAKING</div>
+          <div class="contest-body">
+            <p><strong>Số vòng thi:</strong> 1</p>
+            <p><strong>Số vòng thi tự luyện:</strong> 14</p>
+            <p><strong>Thời gian:</strong> Mở hằng tuần</p>
+            <p><strong>Khối lớp tham gia:</strong> Tất cả level</p>
+            <a class="button primary" href="#account">Đăng nhập tham gia</a>
+          </div>
+        </article>
+      </div>
+    </section>
     <section id="account" class="section account-section">
       <div class="section-heading wide">
         <p class="eyebrow">Tài khoản</p>
@@ -86,8 +148,8 @@
     <section id="learning" class="section learning-section" hidden>
       <div class="section-heading wide">
         <p class="eyebrow">Trang học tập</p>
-        <h2>Chọn bài trước khi làm test</h2>
-        <p id="learning-welcome">Chọn level phù hợp rồi bấm vào làm bài.</p>
+        <h2>Chọn cuộc thi trước khi làm bài</h2>
+        <p id="learning-welcome">Chọn cuộc thi hoặc vòng luyện tập phù hợp rồi bấm vào làm bài.</p>
       </div>
 
       <div class="learning-grid">
@@ -101,15 +163,15 @@
         <div class="level-list" aria-label="Chọn level Super Kids">
           <button class="level-card active" type="button" data-age="5-7">
             <strong>Super Kids Starter</strong>
-            <span>Chào hỏi, màu sắc, số đếm, lớp học, gia đình.</span>
+            <span>5 vòng tự luyện: chào hỏi, màu sắc, số đếm, lớp học, gia đình.</span>
           </button>
           <button class="level-card" type="button" data-age="8-10">
             <strong>Super Kids Junior</strong>
-            <span>Đồ chơi, hoạt động hằng ngày, câu hỏi ngắn.</span>
+            <span>8 vòng tự luyện: đồ chơi, hoạt động hằng ngày, câu hỏi ngắn.</span>
           </button>
           <button class="level-card" type="button" data-age="11-13">
             <strong>Super Kids Challenge</strong>
-            <span>Ngữ pháp, miêu tả, khả năng và đọc hiểu ngắn.</span>
+            <span>10 vòng tự luyện: ngữ pháp, miêu tả, khả năng và đọc hiểu ngắn.</span>
           </button>
         </div>
       </div>
@@ -169,6 +231,30 @@
       </article>
     </section>
 
+
+    <section id="leaderboard" class="section leaderboard-section">
+      <div class="section-heading wide">
+        <p class="eyebrow">Bảng xếp hạng</p>
+        <h2>Top học sinh luyện tập</h2>
+      </div>
+      <div class="leaderboard-list">
+        <div><strong>01</strong><span>Super Starter</span><em>98 điểm</em></div>
+        <div><strong>02</strong><span>Junior Explorer</span><em>94 điểm</em></div>
+        <div><strong>03</strong><span>Challenge Learner</span><em>91 điểm</em></div>
+      </div>
+    </section>
+
+    <section id="guide" class="section guide-section">
+      <div class="section-heading wide">
+        <p class="eyebrow">Hướng dẫn</p>
+        <h2>Cách tham gia</h2>
+      </div>
+      <div class="guide-steps">
+        <article><strong>1</strong><h3>Đăng ký tài khoản</h3><p>Phụ huynh dùng email để tạo tài khoản học tập cho bé.</p></article>
+        <article><strong>2</strong><h3>Chọn cuộc thi</h3><p>Chọn level Super Kids phù hợp và luyện thử trước khi làm bài.</p></article>
+        <article><strong>3</strong><h3>Nộp bài nhận điểm</h3><p>Hệ thống chấm điểm ngay và lưu lượt nộp theo tài khoản.</p></article>
+      </div>
+    </section>
     <section id="progress" class="section progress-band">
       <div>
         <p class="eyebrow">Kết quả</p>
@@ -187,6 +273,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 

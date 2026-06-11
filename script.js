@@ -177,7 +177,7 @@ function updateLearningUI() {
 
   const attemptInfo = getAttemptInfo();
   const accountType = isAdminUser(user) ? "Admin" : "Tài khoản học tập";
-  learningWelcome.textContent = "Chọn level Super Kids phù hợp rồi bấm vào làm bài.";
+  learningWelcome.textContent = "Chọn cuộc thi hoặc vòng tự luyện phù hợp rồi bấm vào làm bài.";
   learningAccount.textContent = `${accountType}: ${user.email}`;
   learningQuota.textContent = `Lượt nộp còn lại: ${attemptInfo.left}`;
 }
@@ -371,6 +371,7 @@ supabaseClient.auth.onAuthStateChange(async (_event, session) => {
 
 renderQuiz(activeAge);
 refreshSession();
+
 
 
 
