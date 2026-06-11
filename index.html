@@ -1,0 +1,156 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>English Web - Thi thử tiếng Anh cho bé</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="brand-mark">EW</span>
+      <span>English Web</span>
+    </a>
+    <nav class="nav" aria-label="Điều hướng chính">
+      <a href="#tests">Bài thi</a>
+      <a href="#account">Tài khoản</a>
+      <a href="#practice">Luyện tập</a>
+      <a href="#progress">Tiến độ</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Thi thử tiếng Anh trắc nghiệm</p>
+        <h1>English Web</h1>
+        <p class="subtitle">Bé chọn độ tuổi, làm bài theo chủ đề quen thuộc và nhận kết quả ngay sau khi nộp bài.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#tests">Bắt đầu làm bài</a>
+          <a class="button secondary" href="#account">Đăng ký miễn phí</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <img src="assets/learning-room.svg" alt="">
+      </div>
+    </section>
+
+    <section id="account" class="section account-section">
+      <div class="section-heading wide">
+        <p class="eyebrow">Tài khoản</p>
+        <h2>Đăng ký để làm nhiều bài hơn</h2>
+        <p>Khách được nộp thử 1 lần. Tài khoản đã đăng ký được nộp 8 lần. Admin không giới hạn.</p>
+      </div>
+
+      <div class="account-grid">
+        <form id="auth-form" class="account-card" autocomplete="off">
+          <div class="form-tabs" role="tablist" aria-label="Chọn đăng nhập hoặc đăng ký">
+            <button class="form-tab active" type="button" data-mode="login">Đăng nhập</button>
+            <button class="form-tab" type="button" data-mode="register">Đăng ký</button>
+          </div>
+          <label>
+            <span>Email</span>
+            <input id="email" type="email" placeholder="parent@example.com" required>
+          </label>
+          <label>
+            <span>Mật khẩu</span>
+            <input id="password" type="password" placeholder="Tối thiểu 4 ký tự" minlength="4" required>
+          </label>
+          <button id="auth-submit" class="button primary full" type="submit">Đăng nhập</button>
+          <p id="auth-message" class="small-message" aria-live="polite"></p>
+        </form>
+
+        <aside class="account-card status-card">
+          <h3 id="account-title">Bạn đang là khách</h3>
+          <p id="account-detail">Đăng ký hoặc đăng nhập để mở thêm lượt nộp bài.</p>
+          <div class="quota-box">
+            <span>Lượt nộp còn lại</span>
+            <strong id="attempts-left">1</strong>
+          </div>
+          <button id="logout" class="button secondary full" type="button" hidden>Đăng xuất</button>
+        </aside>
+      </div>
+
+      <div id="admin-panel" class="admin-panel" hidden>
+        <div>
+          <p class="eyebrow">Admin</p>
+          <h3>Quản lý tài khoản demo</h3>
+          <p>Danh sách này lưu trên trình duyệt hiện tại.</p>
+        </div>
+        <div id="user-list" class="user-list"></div>
+      </div>
+    </section>
+
+    <section id="tests" class="section test-shell">
+      <div class="section-heading">
+        <p class="eyebrow">Chọn cấp độ</p>
+        <h2>Bài thi theo độ tuổi</h2>
+      </div>
+
+      <div class="age-tabs" role="tablist" aria-label="Chọn nhóm tuổi">
+        <button class="age-tab active" type="button" data-age="5-7">5-7 tuổi</button>
+        <button class="age-tab" type="button" data-age="8-10">8-10 tuổi</button>
+        <button class="age-tab" type="button" data-age="11-13">11-13 tuổi</button>
+      </div>
+
+      <div class="quiz-layout">
+        <aside class="quiz-panel">
+          <h3 id="quiz-title">Starter Words</h3>
+          <p id="quiz-description">Từ vựng cơ bản qua hình ảnh, màu sắc và đồ vật quen thuộc.</p>
+          <div class="quiz-meta">
+            <span><strong id="question-count">5</strong> câu hỏi</span>
+            <span><strong>10</strong> phút</span>
+          </div>
+          <button id="restart" class="button secondary full" type="button">Làm lại</button>
+        </aside>
+
+        <form id="quiz-form" class="quiz-card" autocomplete="off">
+          <div id="questions" class="questions"></div>
+          <div class="submit-row">
+            <button class="button primary" type="submit">Nộp bài</button>
+            <p id="result" class="result" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="practice" class="section practice-grid">
+      <div class="section-heading wide">
+        <p class="eyebrow">Luyện thêm</p>
+        <h2>Chủ đề phù hợp với bé</h2>
+      </div>
+      <article class="practice-card">
+        <span class="card-icon">Aa</span>
+        <h3>Từ vựng</h3>
+        <p>Màu sắc, con số, đồ chơi, lớp học và gia đình.</p>
+      </article>
+      <article class="practice-card">
+        <span class="card-icon">Q?</span>
+        <h3>Ngữ pháp</h3>
+        <p>Câu hỏi ngắn, thì hiện tại đơn và mẫu câu giao tiếp.</p>
+      </article>
+      <article class="practice-card">
+        <span class="card-icon">Hi</span>
+        <h3>Giao tiếp</h3>
+        <p>Tình huống chào hỏi, hỏi tuổi, hỏi sở thích và miêu tả.</p>
+      </article>
+    </section>
+
+    <section id="progress" class="section progress-band">
+      <div>
+        <p class="eyebrow">Kết quả</p>
+        <h2>Theo dõi năng lực sau mỗi bài</h2>
+        <p>Bảng điểm mẫu giúp phụ huynh biết bé đang mạnh ở từ vựng, ngữ pháp hay giao tiếp.</p>
+      </div>
+      <div class="score-list" aria-label="Kết quả mẫu">
+        <div><span>Từ vựng</span><strong>86%</strong></div>
+        <div><span>Ngữ pháp</span><strong>72%</strong></div>
+        <div><span>Giao tiếp</span><strong>91%</strong></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
