@@ -1,39 +1,53 @@
 ﻿const quizzes = {
   "5-7": {
-    title: "Starter Words",
-    description: "Từ vựng cơ bản qua hình ảnh, màu sắc và đồ vật quen thuộc.",
+    title: "Super Kids Starter",
+    description: "Bài test theo chủ đề chào hỏi, màu sắc, số đếm, đồ vật lớp học và gia đình.",
     questions: [
-      { text: "Which word means 'màu đỏ'?", options: ["Red", "Blue", "Green", "White"], answer: "Red" },
-      { text: "Choose the animal: cat", options: ["Con mèo", "Cái bàn", "Quả táo", "Cây bút"], answer: "Con mèo" },
-      { text: "How many apples are there: one apple?", options: ["1", "2", "3", "4"], answer: "1" },
-      { text: "What do you say when you meet a friend?", options: ["Hello", "Good night", "Goodbye", "Thank you"], answer: "Hello" },
-      { text: "Which one is a school thing?", options: ["Pencil", "Lion", "Cake", "Shoe"], answer: "Pencil" }
+      { text: "A: Hello! B: ___", options: ["Hello!", "Red", "Seven", "Chair"], answer: "Hello!" },
+      { text: "Which one is a color?", options: ["Yellow", "Pencil", "Mother", "Jump"], answer: "Yellow" },
+      { text: "Count: one, two, ___.", options: ["three", "blue", "book", "hello"], answer: "three" },
+      { text: "What is this? It is used to write.", options: ["A pencil", "A dog", "A banana", "A hat"], answer: "A pencil" },
+      { text: "Choose the family word.", options: ["Father", "Window", "Green", "Run"], answer: "Father" },
+      { text: "I ___ a student.", options: ["am", "is", "are", "be"], answer: "am" },
+      { text: "What color is grass?", options: ["Green", "Pink", "Black", "Orange"], answer: "Green" },
+      { text: "Choose the correct answer: How old are you?", options: ["I am six.", "I am book.", "It is red.", "This is mom."], answer: "I am six." },
+      { text: "Which word is an animal?", options: ["Cat", "Desk", "Bag", "Ten"], answer: "Cat" },
+      { text: "A: Goodbye! B: ___", options: ["Goodbye!", "I am fine.", "It is blue.", "Open book."], answer: "Goodbye!" }
     ]
   },
   "8-10": {
-    title: "Young Learners",
-    description: "Câu hỏi về từ vựng, câu ngắn và tình huống giao tiếp trong lớp học.",
+    title: "Super Kids Junior",
+    description: "Bài test về lớp học, đồ chơi, hoạt động hằng ngày, câu hỏi ngắn và mẫu câu giao tiếp.",
     questions: [
-      { text: "She ___ a new book.", options: ["has", "have", "is", "are"], answer: "has" },
-      { text: "What is the opposite of 'big'?", options: ["Small", "Tall", "Fast", "Clean"], answer: "Small" },
-      { text: "Choose the correct sentence.", options: ["I like bananas.", "I likes bananas.", "I liking bananas.", "I am like bananas."], answer: "I like bananas." },
-      { text: "Where do students learn?", options: ["At school", "In the sky", "Under water", "On a bus stop"], answer: "At school" },
-      { text: "A person who teaches is a ___.", options: ["teacher", "doctor", "driver", "farmer"], answer: "teacher" }
+      { text: "Choose the correct sentence.", options: ["This is my ruler.", "This my is ruler.", "Ruler this my is.", "My this ruler is."], answer: "This is my ruler." },
+      { text: "A: What's your name? B: ___", options: ["My name is Anna.", "I am nine years.", "It is a desk.", "Yes, I do."], answer: "My name is Anna." },
+      { text: "He ___ a red ball.", options: ["has", "have", "am", "are"], answer: "has" },
+      { text: "Which one is a toy?", options: ["Kite", "Teacher", "Kitchen", "Morning"], answer: "Kite" },
+      { text: "A: Can you swim? B: ___", options: ["Yes, I can.", "Yes, I am.", "Yes, it is.", "Yes, he does."], answer: "Yes, I can." },
+      { text: "My sister ___ apples.", options: ["likes", "like", "liking", "to like"], answer: "likes" },
+      { text: "Choose the school place.", options: ["Classroom", "Beach", "Zoo", "Farm"], answer: "Classroom" },
+      { text: "A: Where is the book? B: It is ___ the bag.", options: ["in", "happy", "seven", "drink"], answer: "in" },
+      { text: "What do you do in the morning?", options: ["I brush my teeth.", "I am a pencil.", "It is purple.", "She are tall."], answer: "I brush my teeth." },
+      { text: "Choose the opposite of 'hot'.", options: ["Cold", "Big", "Fast", "Young"], answer: "Cold" }
     ]
   },
   "11-13": {
-    title: "Pre-Teen Challenge",
-    description: "Ngữ pháp và đọc hiểu ngắn cho học sinh lớn hơn.",
+    title: "Super Kids Challenge",
+    description: "Bài test nâng cao hơn về thì hiện tại đơn, khả năng, miêu tả người-vật và đọc hiểu ngắn.",
     questions: [
-      { text: "If it rains tomorrow, we ___ at home.", options: ["will stay", "stayed", "staying", "stay yesterday"], answer: "will stay" },
-      { text: "Choose the synonym of 'happy'.", options: ["Glad", "Angry", "Tired", "Empty"], answer: "Glad" },
-      { text: "My brother plays football every Sunday. The sentence is in ___.", options: ["present simple", "past simple", "future simple", "present perfect"], answer: "present simple" },
-      { text: "Which question is correct?", options: ["What time does class start?", "What time class does start?", "Does what time class start?", "What class time start does?"], answer: "What time does class start?" },
-      { text: "Read: 'Linh is saving money to buy a dictionary.' What does Linh want to buy?", options: ["A dictionary", "A bicycle", "A ticket", "A notebook"], answer: "A dictionary" }
+      { text: "She ___ English every Monday.", options: ["studies", "study", "studying", "is study"], answer: "studies" },
+      { text: "Choose the correct question.", options: ["Where do you live?", "Where you do live?", "Where live do you?", "Where does you live?"], answer: "Where do you live?" },
+      { text: "A: What is he doing? B: He ___ a picture.", options: ["is drawing", "draw", "draws yesterday", "are drawing"], answer: "is drawing" },
+      { text: "Which sentence describes ability?", options: ["I can ride a bike.", "I have a bike.", "This is a bike.", "The bike is red."], answer: "I can ride a bike." },
+      { text: "Choose the best answer: There ___ two books on the table.", options: ["are", "is", "am", "be"], answer: "are" },
+      { text: "Read: 'Tom has a small dog. The dog likes milk.' What does the dog like?", options: ["Milk", "Rice", "Juice", "Bread"], answer: "Milk" },
+      { text: "Choose the word for a job.", options: ["Doctor", "Cloudy", "Behind", "Purple"], answer: "Doctor" },
+      { text: "A: Why do you like music? B: Because it is ___.", options: ["fun", "under", "five", "teacher"], answer: "fun" },
+      { text: "Choose the correct sentence.", options: ["They are playing soccer.", "They is playing soccer.", "They playing soccer are.", "They plays soccer now."], answer: "They are playing soccer." },
+      { text: "Which answer matches: What does your mother do?", options: ["She is a nurse.", "She is in the bag.", "She is seven.", "She is blue."], answer: "She is a nurse." }
     ]
   }
 };
-
 const AFFILIATE_LINK = "";
 const ADMIN_EMAIL = "lethuhien211094@gmail.com";
 const ADMIN_PASSWORD = "123456";
@@ -282,4 +296,5 @@ restartButton.addEventListener("click", () => renderQuiz(activeAge));
 
 renderQuiz(activeAge);
 updateAccountUI();
+
 
