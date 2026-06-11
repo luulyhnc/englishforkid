@@ -22,18 +22,41 @@
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero home-hero">
       <div class="hero-copy">
-        <p class="eyebrow">Thi thử tiếng Anh trắc nghiệm</p>
-        <h1>English Web</h1>
-        <p class="subtitle">Nền tảng thi thử tiếng Anh trực tuyến cho bé theo lộ trình Super Kids, có vòng tự luyện, bài kiểm tra, xếp hạng và báo cáo kết quả.</p>
+        <p id="hero-eyebrow" class="eyebrow">Học tiếng Anh online cho bé</p>
+        <h1 id="hero-title">Tự tin giao tiếp với thế giới</h1>
+        <p id="hero-subtitle" class="subtitle">English Web giúp bé luyện Super Kids qua video giới thiệu, vòng tự luyện, bài thi thử và báo cáo kết quả sau mỗi lần nộp bài.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#contests">Xem cuộc thi</a>
-          <a class="button secondary" href="#account">Đăng ký miễn phí</a>
+          <a id="hero-primary" class="button primary" href="#contests">Xem cuộc thi</a>
+          <a id="hero-secondary" class="button secondary" href="#account">Đăng ký miễn phí</a>
         </div>
       </div>
-      <div class="hero-visual" aria-hidden="true">
-        <img src="assets/learning-room.svg" alt="">
+      <div class="hero-video-card">
+        <div id="intro-video" class="intro-video" aria-label="Video giới thiệu English Web">
+          <img src="assets/learning-room.svg" alt="Video giới thiệu English Web">
+        </div>
+        <div class="video-caption">
+          <strong id="video-title">Video giới thiệu</strong>
+          <span id="video-note">Dán link YouTube hoặc MP4 trong phần Quản lý giao diện của admin.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="benefits" class="section benefits-section">
+      <div class="section-heading wide">
+        <p class="eyebrow">Lợi ích</p>
+        <h2>Bứt phá kỹ năng tiếng Anh mỗi tuần</h2>
+      </div>
+      <div class="benefit-grid">
+        <article><strong id="stat-years">3</strong><span>Level học theo Super Kids</span></article>
+        <article><strong id="stat-countries">30+</strong><span>Câu hỏi luyện tập</span></article>
+        <article><strong id="stat-teachers">8</strong><span>Lượt nộp cho tài khoản</span></article>
+      </div>
+      <div class="method-grid">
+        <article><h3>Giao tiếp thực tế</h3><p>Bé luyện câu hỏi, phản xạ và từ vựng theo chủ đề lớp học, gia đình, hoạt động hằng ngày.</p></article>
+        <article><h3>Lộ trình rõ ràng</h3><p>Starter, Junior và Challenge giúp phụ huynh chọn bài phù hợp với trình độ của bé.</p></article>
+        <article><h3>Báo cáo tức thì</h3><p>Hệ thống chấm điểm ngay sau khi nộp bài và theo dõi lượt làm bài theo tài khoản.</p></article>
       </div>
     </section>
 
@@ -137,10 +160,32 @@
       <div id="admin-panel" class="admin-panel" hidden>
         <div>
           <p class="eyebrow">Admin</p>
-          <h3>Quản lý tài khoản demo</h3>
+          <h3>Quản lý tài khoản</h3>
           <p>Tài khoản được lưu bằng Supabase Auth giống web Nhà trọ.</p>
         </div>
         <div id="user-list" class="user-list"></div>
+
+        <form id="site-editor" class="site-editor" autocomplete="off">
+          <div class="editor-heading">
+            <p class="eyebrow">Quản lý giao diện</p>
+            <h3>Sửa trang mở đầu trực tiếp</h3>
+            <p>Thay đổi sẽ áp dụng ngay trên trang. Nếu Supabase cho phép ghi bảng app_settings, nội dung sẽ được lưu online.</p>
+          </div>
+          <label><span>Dòng nhỏ phía trên</span><input id="edit-eyebrow" type="text"></label>
+          <label><span>Tiêu đề lớn</span><input id="edit-title" type="text"></label>
+          <label><span>Mô tả</span><textarea id="edit-subtitle" rows="3"></textarea></label>
+          <label><span>Link video giới thiệu</span><input id="edit-video" type="url" placeholder="YouTube embed/link hoặc file .mp4"></label>
+          <div class="editor-grid">
+            <label><span>Chỉ số 1</span><input id="edit-stat-years" type="text"></label>
+            <label><span>Chỉ số 2</span><input id="edit-stat-countries" type="text"></label>
+            <label><span>Chỉ số 3</span><input id="edit-stat-teachers" type="text"></label>
+          </div>
+          <div class="submit-row">
+            <button class="button primary" type="submit">Lưu giao diện</button>
+            <button id="reset-site-content" class="button secondary" type="button">Khôi phục mặc định</button>
+            <p id="site-editor-message" class="result" aria-live="polite"></p>
+          </div>
+        </form>
       </div>
     </section>
 
@@ -273,8 +318,4 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
 

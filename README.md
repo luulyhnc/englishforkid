@@ -56,6 +56,14 @@ Sau đó, mỗi lần bấm nút `Nộp bài`, website sẽ chấm điểm và m
 4. Chọn `Deploy from a branch`.
 5. Chọn branch `main` và folder `/root`, sau đó bấm `Save`.
 6. Chờ GitHub tạo link public dạng `https://ten-tai-khoan.github.io/english-web/`.
+## Quản lý giao diện admin
 
+Admin đăng nhập bằng email `lethuhien211094@gmail.com`, vào mục `Tài khoản`, phần `Quản lý giao diện` để sửa tiêu đề trang mở đầu, mô tả, link video giới thiệu và các chỉ số nổi bật. Nội dung sẽ đổi trực tiếp trên trang.
 
+Để lưu thay đổi online cho mọi người cùng thấy, mở Supabase SQL Editor và chạy file:
 
+```txt
+supabase/english_web_site_settings.sql
+```
+
+Video hỗ trợ link YouTube, YouTube embed, Vimeo embed hoặc file `.mp4`.

@@ -56,6 +56,7 @@ const ADMIN_EMAIL = "lethuhien211094@gmail.com";
 const GUEST_LIMIT = 1;
 const MEMBER_LIMIT = 8;
 const GUEST_STORAGE_KEY = "englishWebGuestSubmissions";
+const SITE_CONTENT_KEY = "english_web_site_content";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const tabs = document.querySelectorAll(".age-tab");
@@ -85,13 +86,138 @@ const learningAccount = document.querySelector("#learning-account");
 const learningQuota = document.querySelector("#learning-quota");
 const learningStart = document.querySelector("#learning-start");
 const levelCards = document.querySelectorAll(".level-card");
+const heroEyebrow = document.querySelector("#hero-eyebrow");
+const heroTitle = document.querySelector("#hero-title");
+const heroSubtitle = document.querySelector("#hero-subtitle");
+const introVideo = document.querySelector("#intro-video");
+const statYears = document.querySelector("#stat-years");
+const statCountries = document.querySelector("#stat-countries");
+const statTeachers = document.querySelector("#stat-teachers");
+const siteEditor = document.querySelector("#site-editor");
+const siteEditorMessage = document.querySelector("#site-editor-message");
+const resetSiteContentButton = document.querySelector("#reset-site-content");
+const editEyebrow = document.querySelector("#edit-eyebrow");
+const editTitle = document.querySelector("#edit-title");
+const editSubtitle = document.querySelector("#edit-subtitle");
+const editVideo = document.querySelector("#edit-video");
+const editStatYears = document.querySelector("#edit-stat-years");
+const editStatCountries = document.querySelector("#edit-stat-countries");
+const editStatTeachers = document.querySelector("#edit-stat-teachers");
 
 let activeAge = "5-7";
 let authMode = "login";
 let currentSession = null;
 let currentProfile = null;
 let selectedLearningAge = "5-7";
+let siteContent = getDefaultSiteContent();
 
+
+function getDefaultSiteContent() {
+  return {
+    eyebrow: "Học tiếng Anh online cho bé",
+    title: "Tự tin giao tiếp với thế giới",
+    subtitle: "English Web giúp bé luyện Super Kids qua video giới thiệu, vòng tự luyện, bài thi thử và báo cáo kết quả sau mỗi lần nộp bài.",
+    videoUrl: "",
+    statYears: "3",
+    statCountries: "30+",
+    statTeachers: "8"
+  };
+}
+
+function getStoredSiteContent() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SITE_CONTENT_KEY));
+    return saved ? { ...getDefaultSiteContent(), ...saved } : getDefaultSiteContent();
+  } catch (error) {
+    return getDefaultSiteContent();
+  }
+}
+
+function normalizeVideoUrl(url) {
+  const value = url.trim();
+  if (!value) return "";
+  if (value.includes("youtube.com/watch")) {
+    const parsed = new URL(value);
+    const id = parsed.searchParams.get("v");
+    return id ? `https://www.youtube.com/embed/${id}` : value;
+  }
+  if (value.includes("youtu.be/")) {
+    const id = value.split("youtu.be/")[1]?.split(/[?&]/)[0];
+    return id ? `https://www.youtube.com/embed/${id}` : value;
+  }
+  return value;
+}
+
+function renderIntroVideo(url) {
+  const videoUrl = normalizeVideoUrl(url || "");
+  if (!videoUrl) {
+    introVideo.innerHTML = `<img src="assets/learning-room.svg" alt="Video giới thiệu English Web">`;
+    return;
+  }
+
+  if (videoUrl.includes("youtube.com/embed") || videoUrl.includes("player.vimeo.com")) {
+    introVideo.innerHTML = `<iframe src="${videoUrl}" title="Video giới thiệu English Web" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    return;
+  }
+
+  introVideo.innerHTML = `<video src="${videoUrl}" controls playsinline poster="assets/learning-room.svg"></video>`;
+}
+
+function applySiteContent(content) {
+  siteContent = { ...getDefaultSiteContent(), ...content };
+  heroEyebrow.textContent = siteContent.eyebrow;
+  heroTitle.textContent = siteContent.title;
+  heroSubtitle.textContent = siteContent.subtitle;
+  statYears.textContent = siteContent.statYears;
+  statCountries.textContent = siteContent.statCountries;
+  statTeachers.textContent = siteContent.statTeachers;
+  renderIntroVideo(siteContent.videoUrl);
+  fillSiteEditor();
+}
+
+function fillSiteEditor() {
+  if (!siteEditor) return;
+  editEyebrow.value = siteContent.eyebrow;
+  editTitle.value = siteContent.title;
+  editSubtitle.value = siteContent.subtitle;
+  editVideo.value = siteContent.videoUrl;
+  editStatYears.value = siteContent.statYears;
+  editStatCountries.value = siteContent.statCountries;
+  editStatTeachers.value = siteContent.statTeachers;
+}
+
+async function loadSiteContent() {
+  applySiteContent(getStoredSiteContent());
+
+  const { data } = await supabaseClient
+    .from("app_settings")
+    .select("value")
+    .eq("key", SITE_CONTENT_KEY)
+    .maybeSingle();
+
+  if (data?.value) {
+    try {
+      const remoteContent = JSON.parse(data.value);
+      localStorage.setItem(SITE_CONTENT_KEY, JSON.stringify(remoteContent));
+      applySiteContent(remoteContent);
+    } catch (error) {
+      applySiteContent(getStoredSiteContent());
+    }
+  }
+}
+
+async function saveSiteContent(content) {
+  localStorage.setItem(SITE_CONTENT_KEY, JSON.stringify(content));
+  applySiteContent(content);
+
+  if (!isAdminUser()) return { savedRemote: false };
+
+  const { error } = await supabaseClient
+    .from("app_settings")
+    .upsert({ key: SITE_CONTENT_KEY, value: JSON.stringify(content) });
+
+  return { savedRemote: !error, error };
+}
 function getGuestSubmissions() {
   return Number(localStorage.getItem(GUEST_STORAGE_KEY) || 0);
 }
@@ -166,6 +292,7 @@ function updateAccountUI() {
   adminPanel.hidden = !isAdminUser(user);
   renderUserList();
   updateLearningUI();
+  loadSiteContent();
 }
 
 function updateLearningUI() {
@@ -337,6 +464,31 @@ formTabs.forEach((tab) => {
 
 authForm.addEventListener("submit", handleAuth);
 
+siteEditor.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const nextContent = {
+    eyebrow: editEyebrow.value.trim(),
+    title: editTitle.value.trim(),
+    subtitle: editSubtitle.value.trim(),
+    videoUrl: editVideo.value.trim(),
+    statYears: editStatYears.value.trim(),
+    statCountries: editStatCountries.value.trim(),
+    statTeachers: editStatTeachers.value.trim()
+  };
+
+  siteEditorMessage.textContent = "Đang lưu...";
+  const result = await saveSiteContent(nextContent);
+  siteEditorMessage.textContent = result.savedRemote
+    ? "Đã lưu online."
+    : "Đã áp dụng trên trình duyệt. Nếu muốn lưu online, kiểm tra quyền owner trong Supabase.";
+});
+
+resetSiteContentButton.addEventListener("click", async () => {
+  siteEditorMessage.textContent = "Đang khôi phục...";
+  const result = await saveSiteContent(getDefaultSiteContent());
+  siteEditorMessage.textContent = result.savedRemote ? "Đã khôi phục mặc định online." : "Đã khôi phục mặc định trên trình duyệt.";
+});
+
 logoutButton.addEventListener("click", async () => {
   await supabaseClient.auth.signOut();
   currentSession = null;
@@ -369,9 +521,7 @@ supabaseClient.auth.onAuthStateChange(async (_event, session) => {
   updateAccountUI();
 });
 
+applySiteContent(getStoredSiteContent());
 renderQuiz(activeAge);
 refreshSession();
-
-
-
 
