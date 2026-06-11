@@ -330,11 +330,24 @@ function renderUserList() {
   `;
 }
 
+function clearAuthFields() {
+  if (!emailInput || !passwordInput) return;
+  emailInput.value = "";
+  passwordInput.value = "";
+}
+
+function forceClearSavedLoginFields() {
+  clearAuthFields();
+  setTimeout(clearAuthFields, 50);
+  setTimeout(clearAuthFields, 300);
+}
+
 function setAuthMode(mode) {
   authMode = mode;
   formTabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.mode === mode));
   authSubmit.textContent = mode === "login" ? "Đăng nhập" : "Đăng ký";
   authMessage.textContent = "";
+  forceClearSavedLoginFields();
 }
 
 async function handleAuth(event) {
@@ -366,6 +379,7 @@ async function handleAuth(event) {
   }
 
   authForm.reset();
+  forceClearSavedLoginFields();
   authSubmit.disabled = false;
   await refreshSession();
 }
@@ -494,6 +508,7 @@ logoutButton.addEventListener("click", async () => {
   currentSession = null;
   currentProfile = null;
   authMessage.textContent = "Đã đăng xuất.";
+  forceClearSavedLoginFields();
   window.location.hash = "account";
   testsSection.hidden = true;
   updateAccountUI();
@@ -522,6 +537,7 @@ supabaseClient.auth.onAuthStateChange(async (_event, session) => {
 });
 
 applySiteContent(getStoredSiteContent());
+forceClearSavedLoginFields();
 renderQuiz(activeAge);
 refreshSession();
 

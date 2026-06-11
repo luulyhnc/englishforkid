@@ -136,11 +136,11 @@
           </div>
           <label>
             <span>Email</span>
-            <input id="email" type="email" placeholder="parent@example.com" required>
+            <input id="email" type="email" name="english-web-email" placeholder="parent@example.com" autocomplete="off" autocapitalize="none" spellcheck="false" value="" required>
           </label>
           <label>
             <span>Mật khẩu</span>
-            <input id="password" type="password" placeholder="Tối thiểu 4 ký tự" minlength="4" required>
+            <input id="password" type="password" name="english-web-passcode" placeholder="Tối thiểu 4 ký tự" autocomplete="new-password" value="" minlength="4" required>
           </label>
           <button id="auth-submit" class="button primary full" type="submit">Đăng nhập</button>
           <p id="auth-message" class="small-message" aria-live="polite"></p>
