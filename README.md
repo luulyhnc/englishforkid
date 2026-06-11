@@ -10,8 +10,8 @@ Mở file `index.html` bằng trình duyệt. Website chạy trực tiếp, khô
 
 - Chọn bài thi theo nhóm tuổi: 5-7, 8-10, 11-13.
 - Khách được nộp thử 1 lần.
-- Tài khoản đăng ký được nộp 8 lần.
-- Admin được nộp không giới hạn và xem danh sách tài khoản demo trên trình duyệt hiện tại.
+- Tài khoản đăng ký bằng Supabase Auth được nộp 8 lần.
+- Admin được nộp không giới hạn.
 - Mỗi lần bấm `Nộp bài` sẽ chấm điểm và chạy link affiliate nếu đã cấu hình.
 - Giao diện tương thích điện thoại và máy tính.
 
@@ -22,7 +22,7 @@ Email: lethuhien211094@gmail.com
 Mật khẩu: 123456
 ```
 
-Lưu ý: bản này chạy trên GitHub Pages nên đăng ký/đăng nhập chỉ lưu trên trình duyệt bằng `localStorage`. Nếu cần tài khoản thật dùng chung cho mọi người, cần thêm backend như Firebase, Supabase hoặc một server riêng.
+Lưu ý: đăng ký/đăng nhập dùng Supabase Auth giống project Nhà trọ. Lượt nộp của tài khoản được lưu trong user metadata trên Supabase; khách vẫn lưu lượt thử trên trình duyệt.
 
 ## Cách thêm câu hỏi
 
@@ -56,4 +56,6 @@ Sau đó, mỗi lần bấm nút `Nộp bài`, website sẽ chấm điểm và m
 4. Chọn `Deploy from a branch`.
 5. Chọn branch `main` và folder `/root`, sau đó bấm `Save`.
 6. Chờ GitHub tạo link public dạng `https://ten-tai-khoan.github.io/english-web/`.
+
+
 

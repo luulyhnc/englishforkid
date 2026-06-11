@@ -48,12 +48,15 @@
     ]
   }
 };
+
 const AFFILIATE_LINK = "";
+const SUPABASE_URL = "https://iqmmaotdkvdkikupsclw.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_ohckBpXEPMrP2lcrhjCDuw_q2efbRZ3";
 const ADMIN_EMAIL = "lethuhien211094@gmail.com";
-const ADMIN_PASSWORD = "123456";
 const GUEST_LIMIT = 1;
 const MEMBER_LIMIT = 8;
-const STORAGE_KEY = "englishWebState";
+const GUEST_STORAGE_KEY = "englishWebGuestSubmissions";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const tabs = document.querySelectorAll(".age-tab");
 const formTabs = document.querySelectorAll(".form-tab");
@@ -78,35 +81,59 @@ const userList = document.querySelector("#user-list");
 
 let activeAge = "5-7";
 let authMode = "login";
-let state = loadState();
+let currentSession = null;
+let currentProfile = null;
 
-function loadState() {
-  const fallback = { currentUser: null, guestSubmissions: 0, users: [] };
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return saved && Array.isArray(saved.users) ? { ...fallback, ...saved } : fallback;
-  } catch (error) {
-    return fallback;
-  }
+function getGuestSubmissions() {
+  return Number(localStorage.getItem(GUEST_STORAGE_KEY) || 0);
 }
 
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+function setGuestSubmissions(value) {
+  localStorage.setItem(GUEST_STORAGE_KEY, String(value));
 }
 
 function getCurrentUser() {
-  if (!state.currentUser) return null;
-  if (state.currentUser === ADMIN_EMAIL) {
-    return { email: ADMIN_EMAIL, role: "admin", submissions: 0 };
-  }
-  return state.users.find((user) => user.email === state.currentUser) || null;
+  return currentSession?.user || null;
+}
+
+function isAdminUser(user = getCurrentUser()) {
+  return user?.email?.toLowerCase() === ADMIN_EMAIL;
+}
+
+function getMemberSubmissions(user = getCurrentUser()) {
+  return Number(user?.user_metadata?.english_web_submissions || 0);
 }
 
 function getAttemptInfo() {
   const user = getCurrentUser();
-  if (!user) return { role: "guest", used: state.guestSubmissions, limit: GUEST_LIMIT, left: Math.max(GUEST_LIMIT - state.guestSubmissions, 0) };
-  if (user.role === "admin") return { role: "admin", used: 0, limit: Infinity, left: "Không giới hạn" };
-  return { role: "member", used: user.submissions || 0, limit: MEMBER_LIMIT, left: Math.max(MEMBER_LIMIT - (user.submissions || 0), 0) };
+  if (!user) {
+    const used = getGuestSubmissions();
+    return { left: Math.max(GUEST_LIMIT - used, 0), limit: GUEST_LIMIT };
+  }
+  if (isAdminUser(user)) return { left: "Không giới hạn", limit: Infinity };
+  const used = getMemberSubmissions(user);
+  return { left: Math.max(MEMBER_LIMIT - used, 0), limit: MEMBER_LIMIT };
+}
+
+async function loadProfile() {
+  const user = getCurrentUser();
+  currentProfile = null;
+  if (!user) return;
+
+  const { data } = await supabaseClient
+    .from("profiles")
+    .select("id,email,full_name,role,created_at")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  currentProfile = data || null;
+}
+
+async function refreshSession() {
+  const { data } = await supabaseClient.auth.getSession();
+  currentSession = data.session;
+  await loadProfile();
+  updateAccountUI();
 }
 
 function updateAccountUI() {
@@ -117,34 +144,34 @@ function updateAccountUI() {
     accountTitle.textContent = "Bạn đang là khách";
     accountDetail.textContent = "Đăng ký hoặc đăng nhập để mở thêm lượt nộp bài.";
     logoutButton.hidden = true;
-  } else if (user.role === "admin") {
+  } else if (isAdminUser(user)) {
     accountTitle.textContent = "Admin đang đăng nhập";
-    accountDetail.textContent = `${user.email} có quyền nộp bài không giới hạn và xem tài khoản demo.`;
+    accountDetail.textContent = `${user.email} có quyền nộp bài không giới hạn. Tài khoản được lưu bằng Supabase Auth.`;
     logoutButton.hidden = false;
   } else {
     accountTitle.textContent = "Tài khoản đã đăng nhập";
-    accountDetail.textContent = `${user.email} được nộp nhiều bài hơn khách.`;
+    accountDetail.textContent = `${user.email} được nộp nhiều bài hơn khách. Lượt nộp được lưu trên Supabase.`;
     logoutButton.hidden = false;
   }
 
   attemptsLeft.textContent = attemptInfo.left;
-  adminPanel.hidden = !(user && user.role === "admin");
+  adminPanel.hidden = !isAdminUser(user);
   renderUserList();
 }
 
 function renderUserList() {
   if (!userList) return;
-  if (!state.users.length) {
-    userList.innerHTML = `<div class="user-row"><strong>Chưa có tài khoản đăng ký</strong><span>0 lượt</span></div>`;
+  if (!isAdminUser()) {
+    userList.innerHTML = "";
     return;
   }
 
-  userList.innerHTML = state.users.map((user) => `
+  userList.innerHTML = `
     <div class="user-row">
-      <strong>${user.email}</strong>
-      <span>${user.submissions || 0}/${MEMBER_LIMIT} lượt đã dùng</span>
+      <strong>${currentProfile?.email || ADMIN_EMAIL}</strong>
+      <span>${currentProfile?.role || "admin"}</span>
     </div>
-  `).join("");
+  `;
 }
 
 function setAuthMode(mode) {
@@ -154,47 +181,36 @@ function setAuthMode(mode) {
   authMessage.textContent = "";
 }
 
-function handleAuth(event) {
+async function handleAuth(event) {
   event.preventDefault();
   const email = emailInput.value.trim().toLowerCase();
   const password = passwordInput.value;
+  authSubmit.disabled = true;
+  authMessage.textContent = "Đang xử lý...";
 
-  if (authMode === "login" && email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-    state.currentUser = ADMIN_EMAIL;
-    saveState();
-    authMessage.textContent = "Đã đăng nhập admin.";
-    authForm.reset();
-    updateAccountUI();
+  const { data, error } = authMode === "login"
+    ? await supabaseClient.auth.signInWithPassword({ email, password })
+    : await supabaseClient.auth.signUp({ email, password });
+
+  if (error) {
+    authMessage.textContent = error.message;
+    authSubmit.disabled = false;
     return;
   }
-
-  const existingUser = state.users.find((user) => user.email === email);
 
   if (authMode === "register") {
-    if (email === ADMIN_EMAIL || existingUser) {
-      authMessage.textContent = "Email này đã được sử dụng.";
-      return;
-    }
-
-    state.users.push({ email, password, role: "member", submissions: 0, createdAt: new Date().toISOString() });
-    state.currentUser = email;
-    saveState();
-    authMessage.textContent = "Đăng ký thành công. Bạn đã được mở thêm lượt nộp bài.";
-    authForm.reset();
-    updateAccountUI();
-    return;
+    await supabaseClient.auth.signOut();
+    currentSession = null;
+    authMessage.textContent = "Tài khoản đã được tạo. Nếu hệ thống yêu cầu xác nhận email, hãy xác nhận trước khi đăng nhập.";
+    setAuthMode("login");
+  } else {
+    currentSession = data.session;
+    authMessage.textContent = "Đã đăng nhập.";
   }
 
-  if (!existingUser || existingUser.password !== password) {
-    authMessage.textContent = "Email hoặc mật khẩu chưa đúng.";
-    return;
-  }
-
-  state.currentUser = email;
-  saveState();
-  authMessage.textContent = "Đã đăng nhập.";
   authForm.reset();
-  updateAccountUI();
+  authSubmit.disabled = false;
+  await refreshSession();
 }
 
 function canSubmitQuiz() {
@@ -202,14 +218,20 @@ function canSubmitQuiz() {
   return attemptInfo.limit === Infinity || attemptInfo.left > 0;
 }
 
-function recordSubmission() {
+async function recordSubmission() {
   const user = getCurrentUser();
   if (!user) {
-    state.guestSubmissions += 1;
-  } else if (user.role !== "admin") {
-    user.submissions = (user.submissions || 0) + 1;
+    setGuestSubmissions(getGuestSubmissions() + 1);
+  } else if (!isAdminUser(user)) {
+    const nextSubmissions = getMemberSubmissions(user) + 1;
+    const { data, error } = await supabaseClient.auth.updateUser({
+      data: { ...user.user_metadata, english_web_submissions: nextSubmissions }
+    });
+
+    if (!error && data.user) {
+      currentSession = { ...currentSession, user: data.user };
+    }
   }
-  saveState();
   updateAccountUI();
 }
 
@@ -271,14 +293,15 @@ formTabs.forEach((tab) => {
 
 authForm.addEventListener("submit", handleAuth);
 
-logoutButton.addEventListener("click", () => {
-  state.currentUser = null;
-  saveState();
+logoutButton.addEventListener("click", async () => {
+  await supabaseClient.auth.signOut();
+  currentSession = null;
+  currentProfile = null;
   authMessage.textContent = "Đã đăng xuất.";
   updateAccountUI();
 });
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   if (!canSubmitQuiz()) {
@@ -288,13 +311,17 @@ form.addEventListener("submit", (event) => {
   }
 
   scoreQuiz();
-  recordSubmission();
+  await recordSubmission();
   runAffiliateLink();
 });
 
 restartButton.addEventListener("click", () => renderQuiz(activeAge));
 
+supabaseClient.auth.onAuthStateChange(async (_event, session) => {
+  currentSession = session;
+  await loadProfile();
+  updateAccountUI();
+});
+
 renderQuiz(activeAge);
-updateAccountUI();
-
-
+refreshSession();
